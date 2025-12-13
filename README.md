@@ -3,9 +3,10 @@ Common installation scripts used in multiple products around the Dexter Industri
 
 # Installing
 
-The most basic command used for updating/installing script_tools can be:
-```
-curl -kL dexterindustries.com/update_tools | bash
+The most basic command used for updating/installing `script_tools` with the locally cloned scripts is to run (assuming the combined `DexterInd` repository has already been cloned into the `pi` user's home directory as `~/DexterInd`):
+```bash
+cd ~/DexterInd/RFR_Tools/scripts
+bash install_tools.sh
 ```
 This will get the repository cloned on the Pi machine without installing any packages or dependencies. 
 
@@ -38,33 +39,39 @@ Also, to this install script you can specify a tag or a branch you want to use, 
 # Installation Examples
 
 To install the python package with `sudo` and skip installing apt-get packages (though in this case `--system-wide` can be omitted because it's turned on by default):
-```
-curl -kL dexterindustries.com/update_tools | bash -s -- --install-python-package --system-wide
+```bash
+cd ~/DexterInd/RFR_Tools/scripts
+bash install_tools.sh --install-python-package --system-wide
 ```
 
 To install the python package locally in the home directory and skip installing apt-get packages:
-```
-curl -kL dexterindustries.com/update_tools | bash -s -- --install-python-package --user-local
+```bash
+cd ~/DexterInd/RFR_Tools/scripts
+bash install_tools.sh --install-python-package --user-local
 ```
 
 To install the python package locally in the home directory, run apt-get update and install apt-get dependencies:
-```
-curl -kL dexterindustries.com/update_tools | bash -s -- --install-python-package --user-local --update-aptget --install-deb-deps
+```bash
+cd ~/DexterInd/RFR_Tools/scripts
+bash install_tools.sh --install-python-package --user-local --update-aptget --install-deb-deps
 ```
 
 To only install `script_tools` at the designated location without installing the python package and take the version that's pointed by tag `DexterOS2.0`:
-```
-curl -kL dexterindustries.com/update_tools | bash -s -- DexterOS2.0
+```bash
+cd ~/DexterInd/RFR_Tools/scripts
+bash install_tools.sh DexterOS2.0
 ```
 Or if we want the version that's on `develop` branch we can do:
-```
-curl -kL dexterindustries.com/update_tools | bash -s -- develop
+```bash
+cd ~/DexterInd/RFR_Tools/scripts
+bash install_tools.sh develop
 ```
 To install packages for `python` and `python3` executables/commands, you can do this:
-```
-curl -kL dexterindustries.com/update_tools | bash -s -- --install-python-package --use-python3-exe-too
+```bash
+cd ~/DexterInd/RFR_Tools/scripts
+bash install_tools.sh --install-python-package --use-python3-exe-too
 ```
 
 # Updating
 
-For updating the package, you can use the same commands describe at the previous section.
+For updating the package, you can use the same `install_tools.sh` commands described in the previous section.
