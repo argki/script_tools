@@ -1,72 +1,82 @@
 # Description
-Common installation scripts used in multiple products around the Dexter Industries Galaxy of products.
+Dexter Industries 製品群で共通して利用されるインストール用スクリプト集です。
 
 # Installing
 
-The most basic command used for updating/installing `script_tools` with the locally cloned scripts is to run (assuming the combined `DexterInd` repository has already been cloned into the `pi` user's home directory as `~/DexterInd`):
+ローカルに clone 済みのスクリプトを使って `script_tools` をインストール／更新する最も基本的なコマンドは次のとおりです（`DexterInd` リポジトリ一式が `pi` ユーザーのホームディレクトリ `~/DexterInd` に clone 済みであることを前提とします）。
+
 ```bash
 cd ~/DexterInd/RFR_Tools/scripts
 bash install_tools.sh
 ```
-This will get the repository cloned on the Pi machine without installing any packages or dependencies. 
+
+このコマンドは、Pi 上にリポジトリを配置するだけで、パッケージや依存関係のインストールは行いません。
 
 ### Python Package Options
 
-In order to **enable the installation of the python package**, option `--install-python-package` is a must. This holds true for both python executables (`python` and `python3`) in case you are wondering if this is for `--use-python3-exe-too`.
+**Python パッケージのインストールを有効化する** には、`--install-python-package` オプションが必須です。これは `python` と `python3` の両方の実行ファイルに対して有効であり、`--use-python3-exe-too` 用かどうかを気にする必要はありません。
 
-The options for the python package that can be appended to this command are (all these 3 options **are mutually exclusive**):
+このコマンドに追加できる Python パッケージ関連のオプションは次の 3 つで、**相互に排他的** です。
 
-* `--system-wide` - uses `sudo` for installing the python package system-wide.
+* `--system-wide` - `sudo` を用いて、システム全体に Python パッケージをインストールします。
 
-* `--user-local` - for installing the python package in the home directory of the given user, where no special write/read/execute permissions are required.
+* `--user-local` - 指定ユーザーのホームディレクトリ内に Python パッケージをインストールします。特別な権限は不要です。
 
-* `--env-local` - for installing the python package system-wide, but without any special write/read/execute permissions - in order to use this you'll need a virtual environment.
+* `--env-local` - システム全体にインストールしますが、特別な権限を必要としません。このオプションを使うには virtualenv などの仮想環境が必要です。
 
-On different distributions, Python 3 can only be used with `python3` executable, in which case option `--use-python3-exe-too` is required.
+ディストリビューションによっては、Python 3 を `python3` 実行ファイルでしか使用できない場合があります。その場合は `--use-python3-exe-too` オプションが必要です。
 
 ### Apt-Get Package Options
 
-The options that can be added for apt-get/deb packages are:
+apt-get / deb パッケージ関連で追加できるオプションは次のとおりです。
 
-* `update-aptget` - will run `sudo apt-get update`.
-* `--install-deb-debs` - will run the `sudo apt-get install [dependencies]` command which installs the general dependencies.
+* `update-aptget` - `sudo apt-get update` を実行します。
+* `--install-deb-debs` - 一般的な依存パッケージをインストールするための `sudo apt-get install [dependencies]` を実行します。
 
 ### Selecting a Branch/Tag to Checkout
 
-Also, to this install script you can specify a tag or a branch you want to use, just by passing the name of it. Branches must have this format (`master`, `develop`, `feature/*`, `hotfix/*`, `fix/`) whereas tags can have this format (`v*` or `DexterOS*`).
-**By default, `master` branch is pulled.**
+このインストールスクリプトには、利用したいブランチやタグ名を指定することもできます。ブランチ名は `master` / `develop` / `feature/*` / `hotfix/*` / `fix/` のような形式、タグ名は `v*` や `DexterOS*` のような形式を想定しています。  
+**指定がない場合は `master` ブランチが使用されます。**
 
 # Installation Examples
 
-To install the python package with `sudo` and skip installing apt-get packages (though in this case `--system-wide` can be omitted because it's turned on by default):
+`sudo` を使って Python パッケージをインストールし、apt-get パッケージのインストールをスキップする例です（この場合、`--system-wide` はデフォルト有効のため省略可能です）。
+
 ```bash
 cd ~/DexterInd/RFR_Tools/scripts
 bash install_tools.sh --install-python-package --system-wide
 ```
 
-To install the python package locally in the home directory and skip installing apt-get packages:
+Python パッケージだけをホームディレクトリ内にインストールし、apt-get パッケージをインストールしない例です。
+
 ```bash
 cd ~/DexterInd/RFR_Tools/scripts
 bash install_tools.sh --install-python-package --user-local
 ```
 
-To install the python package locally in the home directory, run apt-get update and install apt-get dependencies:
+Python パッケージをホームディレクトリ内にインストールしつつ、`apt-get update` と apt-get 依存パッケージのインストールも行う例です。
+
 ```bash
 cd ~/DexterInd/RFR_Tools/scripts
 bash install_tools.sh --install-python-package --user-local --update-aptget --install-deb-deps
 ```
 
-To only install `script_tools` at the designated location without installing the python package and take the version that's pointed by tag `DexterOS2.0`:
+Python パッケージはインストールせず、指定したタグ `DexterOS2.0` が指すバージョンの `script_tools` だけを所定の場所に置く例です。
+
 ```bash
 cd ~/DexterInd/RFR_Tools/scripts
 bash install_tools.sh DexterOS2.0
 ```
-Or if we want the version that's on `develop` branch we can do:
+
+`develop` ブランチのバージョンを利用したい場合は次のようにします。
+
 ```bash
 cd ~/DexterInd/RFR_Tools/scripts
 bash install_tools.sh develop
 ```
-To install packages for `python` and `python3` executables/commands, you can do this:
+
+`python` と `python3` の両方の実行ファイル向けにパッケージをインストールしたい場合は次のようにします。
+
 ```bash
 cd ~/DexterInd/RFR_Tools/scripts
 bash install_tools.sh --install-python-package --use-python3-exe-too
@@ -74,4 +84,4 @@ bash install_tools.sh --install-python-package --use-python3-exe-too
 
 # Updating
 
-For updating the package, you can use the same `install_tools.sh` commands described in the previous section.
+パッケージを更新する場合も、前述したのと同じ `install_tools.sh` コマンドを使います。
