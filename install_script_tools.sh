@@ -53,12 +53,14 @@ clone_scriptools(){
   sudo chown pi:pi -R $PIHOME/$DEXTER
   popd > /dev/null
 
-  # it's simpler and more reliable (for now) to just delete the repo and clone a new one
+  # it's simpler and more reliable (for now) to just delete the repo and copy a fresh one from the local DexterInd checkout
   # otherwise, we'd have to deal with all the intricacies of git
   sudo rm -rf $DEXTER_SCRIPT
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  dexterind_root="$(cd "$script_dir/../.." && pwd)"
+  local_script_tools="$dexterind_root/script_tools"
   pushd $DEXTER_PATH > /dev/null
-
-  git clone --quiet --depth=1 -b $selectedbranch https://github.com/DexterInd/script_tools.git
+  cp -a "$local_script_tools" "$DEXTER_SCRIPT"
   cd $DEXTER_SCRIPT
   # useful in case we need it
   current_branch=$(git branch | grep \* | cut -d ' ' -f2-)
